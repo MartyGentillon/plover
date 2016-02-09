@@ -1,0 +1,13 @@
+# General requirements
+appdirs  # locating platform-varying libraries like Documents
+pyserial  # connecting to steno machines that use a serial protocol
+mock  # unittest.mock for Python 2.6 through 3.2
+
+
+# Darwin-specific requirements
+# Use Ted's fork of hidapi so that we get a Universal extension, not just x86-64.
+git+https://github.com/morinted/cython-hidapi.git#egg=hidapi; sys_platform == 'darwin'
+pyobjc-core; sys_platform == 'darwin'
+pyobjc-framework-cocoa; sys_platform == 'darwin'
+pyobjc-framework-quartz; sys_platform == 'darwin'
+py2app; sys_platform == 'darwin'  # building the Plover.app bundle
