@@ -1,12 +1,11 @@
 # General requirements
 appdirs  # locating platform-varying libraries like Documents
 pyserial  # connecting to steno machines that use a serial protocol
-mock  # unittest.mock for Python 2.6 through 3.2
+mock  # unittest.mock for Python 2.6 through 3.2; in stdlib with 3.3+
 
 
 # Darwin-specific requirements
-hidapi; sys_platform == 'darwin'  # for Treal USB support; pulls in Cython
-pyobjc-core; sys_platform == 'darwin'
-pyobjc-framework-cocoa; sys_platform == 'darwin'
-pyobjc-framework-quartz; sys_platform == 'darwin'
+hidapi; sys_platform == 'darwin'  # supporting the Treal's USB protocol
+pyobjc-core; sys_platform == 'darwin'  # Notification Center
+pyobjc-framework-quartz; sys_platform == 'darwin'  # accessing the CGEvent API
 py2app; sys_platform == 'darwin'  # building the Plover.app bundle
