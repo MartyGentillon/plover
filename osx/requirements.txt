@@ -5,8 +5,7 @@ mock  # unittest.mock for Python 2.6 through 3.2
 
 
 # Darwin-specific requirements
-# Use Ted's fork of hidapi so that we get a Universal extension, not just x86-64.
-git+https://github.com/morinted/cython-hidapi.git#egg=hidapi; sys_platform == 'darwin'
+hidapi; sys_platform == 'darwin'  # for Treal USB support; pulls in Cython
 pyobjc-core; sys_platform == 'darwin'
 pyobjc-framework-cocoa; sys_platform == 'darwin'
 pyobjc-framework-quartz; sys_platform == 'darwin'
