@@ -2,9 +2,6 @@
 
 ## Getting Started
 - Run `./bootstrap.sh`.
-  - You might have to reinstall Python and wxPython if you only have the 64-bit
-    versions. Don't worry, the bootstrap script will walk you through it,
-    and Homebrew makes it pretty painless.
 - Run `make app` to produce `../dist/Plover.app`.
   - If you want a disk image instead, use: `make dmg`
   - Standard development practice is to use `make clean app` to produce
@@ -30,17 +27,13 @@ or by using open(1):
 ## Dependencies
 The bootstrap script takes care of these for you, but in case you're curious:
 
-- 32-bit Python2.7: `brew install python --universal --framework`
-- 32-bit wxPython: `brew install wxpython --universal`
-- Various Python libraries, for which see [requirements.txt](./requirements.txt).
-  Notable among them are:
-    - 32-bit hidapi: Requires using
-      [a fork that builds universal binaries.](https://github.com/morinted/cython-hidapi)
-      Installing the standard library through `pip` leaves you with a 64-bit
-      only extension that 32-bit Plover cannot use.
+- Python2.7: `brew install python --framework`
+- wxPython: `brew install wxpython`
+- Various Python libraries, for which see
+  [requirements.txt](./requirements.txt).
+
 
 ### Xcode Tools
-
 You need the Xcode command-line tools.
 The bootstrap script will walk you through this.
 
