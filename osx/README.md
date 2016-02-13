@@ -23,6 +23,14 @@ or by using open(1):
 
     open ../dist/Plover.app
 
+### Dev Workaround: Run as Root
+Root doesn't need permission to use event taps,
+so during development, you can avoid this rigmarole by running Plover via:
+
+```
+sudo python launch.py
+```
+
 
 ## Dependencies
 The bootstrap script takes care of these for you, but in case you're curious:
