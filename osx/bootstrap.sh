@@ -6,8 +6,8 @@
 
 # Exit Statuses
 EX_FAILURE_NO_CCTOOLS=1
-EX_FAILURE_NO_32BIT_PYTHON=2
-EX_FAILURE_NO_32BIT_WXPYTHON=3
+EX_FAILURE_NO_64BIT_PYTHON=2
+EX_FAILURE_NO_64BIT_WXPYTHON=3
 
 PYTHON=${PYTHON:=$(which python)}
 PIP=${PIP:=$(which pip)}
@@ -28,9 +28,9 @@ has_cli_tools() {
 }
 
 
-has_i386_python() {
-    echo "$0: checking $REAL_PYTHON for 32-bit slice"
-    if otool -vf "$REAL_PYTHON" | grep i386 >/dev/null; then
+has_x86_64_python() {
+    echo "$0: checking $REAL_PYTHON for 64-bit slice"
+    if otool -vf "$REAL_PYTHON" | grep x86_64 >/dev/null; then
         "true"
     else
         "false"
@@ -38,9 +38,9 @@ has_i386_python() {
 }
 
 
-has_i386_wx() {
-    echo "$0: checking for working i386 wxPython"
-    if arch -32 $REAL_PYTHON -c 'import wx' 2>&1 >/dev/null; then
+has_x86_64_wx() {
+    echo "$0: checking for working x86_64 wxPython"
+    if arch -64 $REAL_PYTHON -c 'import wx' 2>&1 >/dev/null; then
         "true"
     else
         "false"
@@ -60,34 +60,34 @@ EOT
     fi
 
 
-    if ! has_i386_python; then
+    if ! has_x86_64_python; then
         cat 1>&2 <<EOT
-$0: 32-bit Python is required, but
+$0: 64-bit Python is required, but
 $PYTHON
-doesn't have an i386 slice. Please run:
+doesn't have an x86_64 slice. Please run:
 
     brew uninstall python
-    brew install python --universal --framework
+    brew install python --framework
 
 or use a different Python by setting the PYTHON env var.
 EOT
-        exit $EX_FAILURE_NO_32BIT_PYTHON
+        exit $EX_FAILURE_NO_64BIT_PYTHON
     else
-        echo "$0: 32-bit slice found"
+        echo "$0: 64-bit slice found"
     fi
 
 
-    if ! has_i386_wx; then
+    if ! has_x86_64_wx; then
         cat 1>&2 <<EOT
-$0: 32-bit wxPython is required, but |import wx| when running
-32-bit $PYTHON failed. Please run:
+$0: 64-bit wxPython is required, but |import wx| when running
+64-bit $PYTHON failed. Please run:
 
     brew uninstall wxpython
-    brew install wxpython --universal
+    brew install wxpython
 EOT
-        exit $EX_FAILURE_NO_32BIT_WXPYTHON
+        exit $EX_FAILURE_NO_64BIT_WXPYTHON
     else
-        echo "$0: successfully imported wx into 32-bit Python"
+        echo "$0: successfully imported wx into 64-bit Python"
     fi
 
 
