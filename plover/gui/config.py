@@ -502,17 +502,18 @@ class DisplayConfig(wx.Panel):
 
         translation_transparency_slider_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.translation_transparency_slider = wx.Slider(self)
-        self.translation_transparency_slider.SetMin(0)
-        self.translation_transparency_slider.SetMax(100)
-        self.translation_transparency_slider.SetTick(1)
-        self.translation_transparency_slider.SetValue(self.config.get_translation_frame_transparency())
+        configured_transparency = self.config.get_translation_frame_transparency()
+        self.translation_transparency_slider = wx.Slider(self, value=configured_transparency, minValue=0, maxValue=100)
+        # NOTE: SetTick is only supported under Windows.
+        # This is a wx limitation, not a native GUI toolkit issue.
+        for quarter in [25, 50, 75]:
+            self.translation_transparency_slider.SetTick(quarter)
         self.translation_transparency_slider.Bind(wx.EVT_SLIDER, self.on_transparency_slider_move)
 
         translation_transparency_slider_sizer.Add(self.translation_transparency_slider)
 
         self.translation_transparency_value = wx.StaticText(self,
-                label=str(self.config.get_translation_frame_transparency()))
+                label=self.label_for_transparency(configured_transparency))
 
         translation_transparency_slider_sizer.Add(self.translation_transparency_value)
 
@@ -535,7 +536,13 @@ class DisplayConfig(wx.Panel):
         SuggestionsDisplayDialog.display(self.GetParent(), self.config, self.engine)
 
     def on_transparency_slider_move(self, event):
-        self.translation_transparency_value.SetLabel(str(self.translation_transparency_slider.GetValue()))
+        transparency = self.translation_transparency_slider.GetValue()
+        label = self.label_for_transparency(transparency)
+        self.translation_transparency_value.SetLabel(label)
+
+    def label_for_transparency(self, transparency):
+        label = '{0}%'.format(transparency)
+        return label
 
 class OutputConfig(wx.Panel):
 
