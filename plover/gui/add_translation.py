@@ -22,8 +22,7 @@ class AddTranslationDialog(wx.Dialog):
         wx.Dialog.__init__(self, parent, title=TITLE, pos=pos)
 
         transparency = config.get_translation_frame_transparency()
-
-        self.SetTransparent(255 - (2.55 * transparency))
+        self.applyTransparency(transparency)
 
         self.config = config
 
@@ -207,6 +206,21 @@ class AddTranslationDialog(wx.Dialog):
         self.config.set_translation_frame_x(pos[0]) 
         self.config.set_translation_frame_y(pos[1])
         event.Skip()
+
+    def applyTransparency(self, transparency):
+        """
+        Given a transparency in range 0 through 100, makes the window that
+        percent transparent, or put another way, (1 - pct) opaque.
+        """
+        if not self.CanSetTransparent():
+            return
+
+        # Transparency ranges from 0 to 100,
+        # but SetTransparent takes a byte in range 0 through 255.
+        transparency_percent = transparency / 100.0
+        fractional_alpha = 1.0 - transparency_percent
+        alpha_byte = int(round(0xFF * fractional_alpha))
+        self.SetTransparent(alpha_byte)
 
     def _normalized_strokes(self):
         strokes = self.strokes_text.GetValue().upper().replace('/', ' ').split()
