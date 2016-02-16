@@ -119,6 +119,17 @@ RTF_EXTENSION = '.rtf'
 # Logging constants.
 LOG_EXTENSION = '.log'
 
+def clamp(number, minimum, maximum):
+    """
+    Clamps a number to the range [minimum, maximum] inclusive of endpoints.
+    """
+    least, most = (minimum, maximum) \
+        if minimum <= maximum \
+        else (maximum, minimum)
+    at_least_minimum = max(number, least)
+    and_at_most_maximum = min(at_least_minimum, most)
+    return and_at_most_maximum
+
 # TODO: Unit test this class
 
 class Config(object):
@@ -390,10 +401,12 @@ class Config(object):
         self._set(TRANSLATION_FRAME_SECTION, TRANSLATION_FRAME_TRANSPARENCY_OPTION, transparency)
 
     def get_translation_frame_transparency(self):
-        return self._get_int(TRANSLATION_FRAME_SECTION,
-                             TRANSLATION_FRAME_TRANSPARENCY_OPTION,
-                             DEFAULT_TRANSLATION_FRAME_TRANSPARENCY)
-                             
+        raw = self._get_int(TRANSLATION_FRAME_SECTION,
+                            TRANSLATION_FRAME_TRANSPARENCY_OPTION,
+                            DEFAULT_TRANSLATION_FRAME_TRANSPARENCY)
+        clamped_value = clamp(raw, 0, 100)
+        return clamped_value
+
     def set_lookup_frame_x(self, x):
         self._set(LOOKUP_FRAME_SECTION, LOOKUP_FRAME_X_OPTION, x)
     
