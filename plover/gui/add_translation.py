@@ -219,7 +219,7 @@ class AddTranslationDialog(wx.Dialog):
         # but SetTransparent takes a byte in range 0 through 255.
         transparency_percent = transparency / 100.0
         fractional_alpha = 1.0 - transparency_percent
-        alpha_byte = int(round(0xFF * fractional_alpha))
+        alpha_byte = int(round(0xFF * fractional_alpha)) % 0x100
         self.SetTransparent(alpha_byte)
 
     def _normalized_strokes(self):
