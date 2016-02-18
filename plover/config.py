@@ -86,7 +86,7 @@ DEFAULT_TRANSLATION_FRAME_X = -1
 TRANSLATION_FRAME_Y_OPTION = 'y'
 DEFAULT_TRANSLATION_FRAME_Y = -1
 TRANSLATION_FRAME_TRANSPARENCY_OPTION = 'transparency'
-DEFAULT_TRANSLATION_FRAME_TRANSPARENCY = 0
+DEFAULT_TRANSLATION_FRAME_TRANSPARENCY = 100
 
 LOOKUP_FRAME_SECTION = 'Lookup Frame'
 LOOKUP_FRAME_X_OPTION = 'x'
@@ -398,7 +398,8 @@ class Config(object):
                              DEFAULT_TRANSLATION_FRAME_Y)
 
     def set_translation_frame_transparency(self, transparency):
-        self._set(TRANSLATION_FRAME_SECTION, TRANSLATION_FRAME_TRANSPARENCY_OPTION, transparency)
+        clamped = clamp(transparency, 0, 100)
+        self._set(TRANSLATION_FRAME_SECTION, TRANSLATION_FRAME_TRANSPARENCY_OPTION, clamped)
 
     def get_translation_frame_transparency(self):
         raw = self._get_int(TRANSLATION_FRAME_SECTION,
