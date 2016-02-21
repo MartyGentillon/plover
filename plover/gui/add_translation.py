@@ -22,7 +22,7 @@ class AddTranslationDialog(wx.Dialog):
         wx.Dialog.__init__(self, parent, title=TITLE, pos=pos)
 
         transparency = config.get_translation_frame_transparency()
-        self.applyTransparency(transparency)
+        self._apply_transparency(transparency)
 
         self.config = config
 
@@ -207,7 +207,7 @@ class AddTranslationDialog(wx.Dialog):
         self.config.set_translation_frame_y(pos[1])
         event.Skip()
 
-    def applyTransparency(self, transparency):
+    def _apply_transparency(self, transparency):
         """
         Given a transparency in range 0 through 100, makes the window that
         percent transparent. Handles conversion to range 0 through 0xFF.
