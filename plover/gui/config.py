@@ -46,7 +46,7 @@ SPACE_PLACEMENTS_LABEL = "Space Placement:"
 SPACE_PLACEMENT_BEFORE = "Before Output"
 SPACE_PLACEMENT_AFTER = "After Output"
 SPACE_PLACEMENTS = [SPACE_PLACEMENT_BEFORE, SPACE_PLACEMENT_AFTER]
-TRANSLATION_TRANSPARENCY_LABEL = "Translation Dialog Transparency"
+TRANSLATION_OPACITY_LABEL = "Translation Dialog Opacity"
 UI_BORDER = 4
 COMPONENT_SPACE = 3
 UP_IMAGE_FILE = os.path.join(conf.ASSETS_DIR, 'up.png')
@@ -522,7 +522,7 @@ class DisplayConfig(wx.Panel):
         translation_transparency_sizer = wx.BoxSizer(wx.VERTICAL)
 
         translation_transparency_label = wx.StaticText(
-            self, label=TRANSLATION_TRANSPARENCY_LABEL)
+            self, label=TRANSLATION_OPACITY_LABEL)
         translation_transparency_sizer.Add(
             translation_transparency_label,
             border=COMPONENT_SPACE,
